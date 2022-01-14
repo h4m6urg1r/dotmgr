@@ -1,0 +1,98 @@
+#!/bin/env python
+import sys
+import os
+import subprocess
+import shlex
+import tools
+import json
+
+
+# %% function for output
+def show(self, message):
+    print(message)
+
+
+# %% function for getting input from user
+def get(self, prompt):
+    input(prompt)
+
+
+# %% base class for all the tools
+class base:
+    logger = tools.getLogger('base')
+
+    def __init__(self, *args, **kwargs):
+        self.logger.setLevel(tools.DEBUG)
+        # log #
+        self.logger.info('getting location of the script')
+        # log #
+        self.location = os.path.abspath(
+            sys.argv[0]
+        )
+        # log #
+        self.logger.info('got script location')
+        self.logger.debug(f'self.location = {self.location}')
+        # log #
+        # log #
+        self.logger.info('getting path of git repo')
+        # log #
+        self.repoPath = os.path.abspath(
+            os.path.split(
+                subprocess.run(
+                    shlex.split(
+                        "git rev-parse --git-dir"
+                    ),
+                    universal_newlines=True,
+                    stdout=subprocess.PIPE,
+                    stderr=subprocess.PIPE
+                )
+            )[0]
+        )
+        # log #
+        self.logger.info('got repo path')
+        self.logger.debug(f'self.repoPath = {self.repoPath}')
+        # log #
+        # log #
+        self.logger.info('getting path of file containing location that is used to create config from templates')
+        # log #
+        self.locationFile = os.join(os.path.split(
+            self.location)[0],
+            "locations.json"
+        )
+        # log #
+        self.logger.info('got locations file')
+        self.logger.debug(f'self.locationFile = {self.locationFile}')
+        # log #
+        self.locationFiller = ['<*-', '-*>']
+
+    def install(self):
+        # log #
+        self.logger.info('getting data for creating locations file')
+        # log #
+        locations = {
+            f'{self.locationFiller[0]}home{self.locationFiller[1]}': f'{os.path.expanduser("~")}',
+            f'{self.locationFiller[0]}homeShort{self.locationFiller[1]}': '~',
+            f'{self.locationFiller[0]}repoPath{self.locationFiller[1]}': f'{self.repoPath}',
+            f'{self.locationFiller[0]}repoPathShort{self.locationFiller[1]}': f'{self.repoPath.replace(os.path.expanduser("~"), "~", 1)}'
+            # f'{self.locationFiller[0]}{self.locationFiller[1]}': ,
+        }
+        # log #
+        self.logger.info('got locations from locations file')
+        self.logger.debug(f'locations = {locations}')
+        # log #
+        json.dump(locations, open(self.locationFile, 'w'), pretty_print=True)
+        # log #
+        self.logger.info('wrote locations data in locations file')
+        # log #
+
+    def injectLocation(self, file=get('Enter file path in which you want to insert path(s)'), newFile=get('Enter location for new file that will be generated')):
+        data = json.load(self.locationFile)
+        for regex in data.keys():
+            # log #
+            self.logger.info(f'got {file} file for editing')
+            # log #
+            show(f'editing {file}')
+            os.system('mkdir -p {2}; cp {0} {1}; sed -i \'s/{4}/{3} \''.format(file, newFile, os.split(newFile)[0], data[regex], regex.replace("*", "\\*", 2)))
+            # log #
+            self.logger.info(f'created {newFile} and replaced the path placeholders')
+            # log #
