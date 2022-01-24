@@ -8,12 +8,12 @@ import json
 
 
 # %% function for output
-def show(self, message):
+def show(message):
     print(message)
 
 
 # %% function for getting input from user
-def get(self, prompt):
+def get(prompt):
     input(prompt)
 
 
@@ -96,3 +96,4 @@ class base:
             # log #
             self.logger.info(f'created {newFile} and replaced the path placeholders')
             # log #
+           
