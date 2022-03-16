@@ -1,0 +1,19 @@
+{
+    "default" : {
+        "files" : {
+            "i3/default" : ".config/i3"
+        }
+    },
+    "endeavour" : {
+        "files" : {
+            "i3/endeavour" : ".config/i3",
+            "rofi/endeavour" : ".config/rofi",
+            "nitrogen/endeavour" : ".config/nitrogen"
+        }
+    },
+    "custom" : {
+        "files" : {
+            "i3/custom" : ".config/i3"
+        }
+    }
+}
