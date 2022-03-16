@@ -1,0 +1,63 @@
+#!/usr/bin/env python
+
+#Swiss Army Knife
+
+import subprocess, shlex
+import argparse
+import os
+import json
+
+parser = argparse.ArgumentParser(description='Swiss Army Knife, It\'s supposed to do shit load of stuff')
+
+"""
+    * store :- stores the input value to the Namespace object. (This is the default action.)
+
+    * store_const :- stores a constant value when the corresponding optional arguments are specified.
+
+    * store_true :- stores the Boolean value True when the corresponding optional argument is specified and stores a False elsewhere.
+
+    * store_false :- stores the Boolean value False when the corresponding optional argument is specified and stores True elsewhere.
+
+    * append :- stores a list, appending a value to the list each time the option is provided.
+
+    * append_const :- stores a list appending a constant value to the list each time the option is provided.
+
+    * count :- stores an int that is equal to the times the option has been provided.
+
+    * help :- shows a help text and exits.
+
+    * version :- shows the version of the program and exits.
+"""
+
+parser.add_argument(
+    '-i',
+    '--install',
+    help='Install packages'
+)
+
+args = parser.parse_args()
+
+def installPackages():
+    os.system('yay -Syu --ignore=xorg-server-xephyr')
+
+class switchConfig:
+    def __init__(self):
+        self.backupFolder =
+
+    def link(self,src,dest):
+        print('creating {}'.format(self.backupFolder))
+        os.system('mkdir -p {}'.format(self.backupFolder))
+        move = False
+        if os.path.exists(dest):
+            if os.path.islink(dest):
+                if str(os.readlink(dest)).startswith(repoPath): os.unlink(dest)
+                else: move = True
+            else: move = True
+        else: move = True
+        if move: os.rename(dest,os.path.join(os.path.expanduser('~/.cache/dotBak'),os.split(dest)[1]))
+        print('symlinking {} to {}'.format(src,dest))
+        os.system('ln -s {} {}'.format(src,dest))
+
+
+    def i3(self,which):
+        self
