@@ -42,11 +42,14 @@ def installPackages():
 
 class switchConfig:
     def __init__(self):
-        self.backupFolder =
+        self.backupFolder = os.path.expanduser('~/.cache/dotBacks')
+        self.createFolder(self.backupFolder)
+
+    def createFolder(folder):
+        os.system('mkdir -p {}'.format(folder))
 
     def link(self,src,dest):
         print('creating {}'.format(self.backupFolder))
-        os.system('mkdir -p {}'.format(self.backupFolder))
         move = False
         if os.path.exists(dest):
             if os.path.islink(dest):
@@ -60,4 +63,4 @@ class switchConfig:
 
 
     def i3(self,which):
-        self
+        pass
