@@ -38,14 +38,21 @@ end)
 
 -- Titlebars only on floating windows
 client.connect_signal("property::floating", function(c)
-    if c.floating then
+    if c.floating and not (c.requests_no_titlebar or c.fullscreen) then
         RC.libs.awful.titlebar.show(c)
     else
         RC.libs.awful.titlebar.hide(c)
     end
 end)
 
-function dynamic_title(c)
+RC.libs.awful.tag.attached_connect_signal(nil,"property::layout", function(t)
+    local float = t.layout.name == "floating"
+    for _,c in pairs(t:clients()) do
+        c.floating = float
+    end
+end)
+
+function toggle(c)
     if c.floating or c.first_tag.layout.name == "floating" then
         RC.libs.awful.titlebar.show(c)
     else
@@ -53,13 +60,4 @@ function dynamic_title(c)
     end
 end
 
-tag.connect_signal("property::layout", function(t)
-    local clients = t:clients()
-    for k,c in pairs(clients) do
-        if c.floating or c.first_tag.layout.name == "floating" and not c.requests_no_titlebar then
-            RC.libs.awful.titlebar.show(c)
-        else
-            RC.libs.awful.titlebar.hide(c)
-        end
-    end
-end)
+RC.custom.titlebar.toggle = toggle

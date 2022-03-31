@@ -1,7 +1,3 @@
-RC.libs.ruled.client.connect_signal("property::requests_no_titlebar", function(c)
-        RC.libs.awful.titlebar.hide(c)
-    end
-)
 -- Rules to apply to new clients.
 RC.libs.ruled.client.connect_signal("request::rules", function()
     -- All clients will match this rule.
@@ -51,4 +47,11 @@ RC.libs.ruled.client.connect_signal("request::rules", function()
     --     rule       = { class = "Firefox"     },
     --     properties = { screen = 1, tag = "2" }
     -- }
+end)
+
+-- Open floating windows in center of the screen
+client.connect_signal("request::manage", function(client, context)
+    if client.floating and context == "new" then
+        client. placement = RC.libs.awful.placement.centered + RC.libs.awful.placement.no_overlap + RC.libs.awful.placement.no_offscreen
+    end
 end)
