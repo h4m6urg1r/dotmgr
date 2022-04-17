@@ -1,13 +1,17 @@
 #!/usr/bin/env python
 
+"""
+It hurts me writing this shit idk how long I can keep smacking my brain to complete this shit.
+"""
+
 #Swiss Army Knife
 
 import subprocess, shlex
-import argparse
+# import argparse
 import os
 import json
 
-parser = argparse.ArgumentParser(description='Swiss Army Knife, It\'s supposed to do shit load of stuff')
+# parser = argparse.ArgumentParser(description='Swiss Army Knife, It\'s supposed to do shit load of stuff')
 
 """
     * store :- stores the input value to the Namespace object. (This is the default action.)
@@ -29,13 +33,19 @@ parser = argparse.ArgumentParser(description='Swiss Army Knife, It\'s supposed t
     * version :- shows the version of the program and exits.
 """
 
-parser.add_argument(
-    '-i',
-    '--install',
-    help='Install packages'
-)
+# parser.add_argument(
+#     '-i',
+#     '--install',
+#     help='Install a package'
+# )
 
-args = parser.parse_args()
+# parser.add_argument(
+#     '-d',
+#     '--daemon',
+#     help='Daemonise sak'
+# )
+
+# args = parser.parse_args()
 
 def installPackages():
     os.system('yay -Syu --ignore=xorg-server-xephyr')
@@ -44,6 +54,9 @@ class switchConfig:
     def __init__(self):
         self.backupFolder = os.path.expanduser('~/.cache/dotBacks')
         self.createFolder(self.backupFolder)
+
+    def log(self, ):
+        pass
 
     def createFolder(folder):
         os.system('mkdir -p {}'.format(folder))
@@ -58,9 +71,45 @@ class switchConfig:
             else: move = True
         else: move = True
         if move: os.rename(dest,os.path.join(os.path.expanduser('~/.cache/dotBak'),os.split(dest)[1]))
-        print('symlinking {} to {}'.format(src,dest))
         os.system('ln -s {} {}'.format(src,dest))
 
 
     def i3(self,which):
         pass
+
+    def awesome(self, which):
+        pass
+
+class daemon:
+    def __init__(self):
+        self.de = DE()
+        self.current = ''
+
+    def de(self, which):
+        if which == 'awesome':
+            self.de.awesome()
+        elif which == 'xfce4':
+            self.de.xfce4()
+        elif which == 'i3':
+            self.de.i3()
+        elif which == 'i3 debug':
+            self.de.i3Debug()
+
+    def start(self, de, action):
+        if de == 'awesome':
+            if action == 'start':
+            elif action == 'stop':
+            self.current = 'awesome'
+            os.system('awesome &')
+
+        if de == 'xfce4':
+            self.current = 'xfce4'
+            os.system('startxfce4 &')
+
+        if de == 'i3':
+            self.current = 'i3'
+            os.system('i3 &')
+
+        if de == 'i3Debug':
+            self.current = 'i3Debug'
+            os.system('i3-with-shmlog &')

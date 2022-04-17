@@ -1,0 +1,15 @@
+{
+    "default" : {
+        "files" : {
+            "awesome/default" : ".config/awesome"
+        },
+        "extra files" : {
+            "autostart/awesome/*" : ".config/autostart/"
+        }
+    },
+    "custom" : {
+        "files" : {
+            "awesome/custom" : ".config/awesome"
+        }
+    }
+}

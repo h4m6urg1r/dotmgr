@@ -1,29 +1,33 @@
 RC = {}
-RC.libs = {}
-RC.custom = {}
-RC.custom.titlebar = {}
+-- RC.libs = {}
+-- RC.custom = {}
+-- RC.custom.titlebar = {}
+--
 -- If LuaRocks is installed, make sure that packages installed through it are
 -- found (e.g. lgi). If LuaRocks is not installed, do nothing.
 pcall(require, "luarocks.loader")
 
 -- Standard awesome library
-RC.libs.gears = require("gears")
-RC.libs.awful = require("awful")
+gears = require("gears")
+awful = require("awful")
 require("awful.autofocus")
 -- Widget and layout library
-RC.libs.wibox = require("wibox")
+wibox = require("wibox")
 -- Theme handling library
-RC.libs.beautiful = require("beautiful")
+beautiful = require("beautiful")
 -- Notification library
-RC.libs.naughty = require("naughty")
+naughty = require("naughty")
 -- Declarative object management
-RC.libs.ruled = require("ruled")
-RC.libs.menubar = require("menubar")
-RC.libs.hotkeys_popup = require("awful.hotkeys_popup")
+ruled = require("ruled")
+menubar = require("menubar")
+hotkeys_popup = require("awful.hotkeys_popup")
 -- Enable hotkeys help widget for VIM and other apps
 -- when client with a matching name is opened:
-require("awful.hotkeys_popup.keys")
+-- require("awful.hotkeys_popup.keys")
 
+-- Extra layout
+machi = require("layout-machi")
+beautiful.layout_machi = machi.get_icon()
 --==============================================================================================================================
 -- {{{ Error handling
 require('main.errorHandling')
@@ -32,7 +36,7 @@ require('main.errorHandling')
 --==============================================================================================================================
 -- {{{ Variable definitions
 -- Themes define colours, icons, font and wallpapers.
-RC.libs.beautiful.init(RC.libs.gears.filesystem.get_themes_dir() .. "default/theme.lua")
+beautiful.init(gears.filesystem.get_themes_dir() .. "default/theme.lua")
 RC.vars = require('main.userVariables')
 -- }}}
 
@@ -89,7 +93,6 @@ require('decorations.titlebar')
 require('decorations.notification')
 -- }}}
 
--- Enable sloppy focus, so that focus follows mouse.
-client.connect_signal("mouse::enter", function(c)
-    c:activate { context = "mouse_enter", raise = false }
-end)
+-- {{{ Garbage collector
+require('main.garbageCollector')
+-- }}}

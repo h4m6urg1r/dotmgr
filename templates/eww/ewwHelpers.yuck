@@ -1,0 +1,10 @@
+(defwidget pop []
+  (button :onclick ))
+
+(defwidget revealOnHover [var varname ?class ?transition ?duration]
+  (eventbox :onhover "eww update ${varname}=true"
+            :onhoverlost "eww update ${varname}=false"
+    (box :space-evenly true
+      (children :nth 0)
+        (expander :expanded var
+          (children :nth 1)))))

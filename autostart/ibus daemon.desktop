@@ -2,9 +2,9 @@
 Encoding=UTF-8
 Version=0.9.4
 Type=Application
-Name=Dunst
-Comment=dunst notification daemon
-Exec=dunst -print > /tmp/dunst.notifs.log
+Name=ibus daemon
+Comment=
+Exec=/usr/bin/ibus-daemon -d -r
 RunHook=0
 StartupNotify=false
 Terminal=false

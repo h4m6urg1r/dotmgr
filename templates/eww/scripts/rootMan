@@ -1,0 +1,18 @@
+#!/bin/env bash
+
+#import subprocess
+#
+#class spy:
+#    def __init__(self, var):
+#        self.cmd = 'xprop -root -spy ' + var
+#
+#    def main(self):
+#        p = subprocess.Popen(self.cmd, stdout=subprocess.PIPE, stderr=None, shell=True)
+#        for line in iter(p.stdout.readline, ''):
+#            print(line)
+#
+#        p.stdout.flush()
+#        p.stdout.close()
+
+#xprop -root -spy $1 | grep --line-buffered -o '0[xX][a-zA-Z0-9]*' | while read -r id; do echo $id; done
+xprop -root -spy $2 | sed 's/.*= //'

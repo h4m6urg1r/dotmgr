@@ -1,2 +1,3 @@
 * What's changed
 1. Title bar only shows up when in floating mode and client requests for it.
+2. Title bar can be toggled

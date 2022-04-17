@@ -1,31 +1,35 @@
-RC.libs.awful.keyboard.append_global_keybindings({
-    RC.libs.awful.key {
+-- Imports
+local awful = require("awful")
+local machi = require("layout-machi")
+
+awful.keyboard.append_global_keybindings({
+    awful.key {
         modifiers   = { RC.vars.modkey },
         keygroup    = "numrow",
         description = "only view tag",
         group       = "tag",
         on_press    = function (index)
-            local screen = RC.libs.awful.screen.focused()
+            local screen = awful.screen.focused()
             local tag = screen.tags[index]
             if tag then
                 tag:view_only()
             end
         end,
     },
-    RC.libs.awful.key {
+    awful.key {
         modifiers   = { RC.vars.modkey, "Control" },
         keygroup    = "numrow",
         description = "toggle tag",
         group       = "tag",
         on_press    = function (index)
-            local screen = RC.libs.awful.screen.focused()
+            local screen = awful.screen.focused()
             local tag = screen.tags[index]
             if tag then
-                RC.libs.awful.tag.viewtoggle(tag)
+                awful.tag.viewtoggle(tag)
             end
         end,
     },
-    RC.libs.awful.key {
+    awful.key {
         modifiers = { RC.vars.modkey, "Shift" },
         keygroup    = "numrow",
         description = "move focused client to tag",
@@ -39,7 +43,7 @@ RC.libs.awful.keyboard.append_global_keybindings({
             end
         end,
     },
-    RC.libs.awful.key {
+    awful.key {
         modifiers   = { RC.vars.modkey, "Control", "Shift" },
         keygroup    = "numrow",
         description = "toggle focused client on tag",
@@ -53,16 +57,20 @@ RC.libs.awful.keyboard.append_global_keybindings({
             end
         end,
     },
-    RC.libs.awful.key {
+    awful.key {
         modifiers   = { RC.vars.modkey },
         keygroup    = "numpad",
         description = "select layout directly",
         group       = "layout",
         on_press    = function (index)
-            local t = RC.libs.awful.screen.focused().selected_tag
+            local t = awful.screen.focused().selected_tag
             if t then
                 t.layout = t.layouts[index] or t.layout
             end
         end,
-    }
+    },
+    awful.key({ RC.vars.modkey, }, ".", function() machi.default_editor.start_interactive() end,
+        {description = "edit the current layout if it is a machi layout", group = "layout"}),
+    awful.key({ RC.vars.modkey, }, "/", function () machi.switcher.start(client.focus) end,
+        {description = "switch between windows for a machi layout", group = "layout"}),
 })
