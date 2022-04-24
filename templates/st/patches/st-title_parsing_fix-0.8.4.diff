@@ -13,10 +13,11 @@ diff --git a/st.c b/st.c
 index 76b7e0d..8c68218 100644
 --- a/st.c
 +++ b/st.c
-@@ -42,6 +42,8 @@
+@@ -42,7 +42,9 @@
  #define ISCONTROLC1(c)		(BETWEEN(c, 0x80, 0x9f))
  #define ISCONTROL(c)		(ISCONTROLC0(c) || ISCONTROLC1(c))
  #define ISDELIM(u)		(u && wcschr(worddelimiters, u))
+ #define IS_SNAP_LINE_DELIM(u) (u && wcschr(snap_line_delimiters, u))
 +#define STRESCARGREST(n)	((n) == 0 ? strescseq.buf : strescseq.argp[(n)-1] + 1)
 +#define STRESCARGJUST(n)	(*(strescseq.argp[n]) = '\0', STRESCARGREST(n))
  

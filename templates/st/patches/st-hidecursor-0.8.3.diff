@@ -2,8 +2,8 @@ diff --git a/x.c b/x.c
 index e5f1737..7e759b0 100644
 --- a/x.c
 +++ b/x.c
-@@ -103,6 +103,11 @@ typedef struct {
- 	Draw draw;
+@@ -109,5 +109,10 @@ typedef struct {
+ 	GC bggc;          /* Graphics Context for background */
  	Visual *vis;
  	XSetWindowAttributes attrs;
 +	/* Here, we use the term *pointer* to differentiate the cursor
@@ -13,7 +13,6 @@ index e5f1737..7e759b0 100644
 +	int pointerisvisible;
  	int scr;
  	int isfixed; /* is fixed geometry? */
- 	int l, t; /* left and top offset */
 @@ -698,6 +703,13 @@ brelease(XEvent *e)
  void
  bmotion(XEvent *e)
@@ -28,7 +27,7 @@ index e5f1737..7e759b0 100644
  	if (IS_SET(MODE_MOUSE) && !(e->xbutton.state & forcemousemod)) {
  		mousereport(e);
  		return;
-@@ -1099,10 +1111,10 @@ void
+@@ -1289,12 +1289,12 @@ void
  xinit(int cols, int rows)
  {
  	XGCValues gcvalues;
@@ -37,6 +36,8 @@ index e5f1737..7e759b0 100644
  	pid_t thispid = getpid();
  	XColor xmousefg, xmousebg;
 +	Pixmap blankpm;
+ 	XWindowAttributes attr;
+ 	XVisualInfo vis;
  
  	if (!(xw.dpy = XOpenDisplay(NULL)))
  		die("can't open display\n");

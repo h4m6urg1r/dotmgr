@@ -82,7 +82,7 @@ return require('packer').startup(function()
             after = 'friendly-snippets',
             config = function()
                 require("luasnip.loaders.from_vscode").lazy_load()
-                require('luasnip').filetype_extend('global','python')
+                require('luasnip').filetype_extend('global','python', 'c', 'cpp')
             end
         },
         'rafamadriz/friendly-snippets',
@@ -177,9 +177,17 @@ return require('packer').startup(function()
         run='cd app && yarn install'
     } }
 
-use {
-    'numToStr/Comment.nvim',
-    config = function()
-        require('Comment').setup()
-    end
-}end)
+    use {
+        'numToStr/Comment.nvim',
+        config = function()
+            require('Comment').setup()
+        end
+    }
+
+    use {
+        'christoomey/vim-tmux-navigator',
+        config=function()
+            require('config/vim-tmux-navigator')
+        end
+    }
+end)

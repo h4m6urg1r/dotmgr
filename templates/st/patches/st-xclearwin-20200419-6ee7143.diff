@@ -18,7 +18,7 @@ diff --git a/st.c b/st.c
 index 3e48410..2efb4bd 100644
 --- a/st.c
 +++ b/st.c
-@@ -1874,10 +1874,8 @@ strhandle(void)
+@@ -2009,10 +2009,8 @@ strhandle(void)
  				fprintf(stderr, "erresc: invalid color j=%d, p=%s\n",
  				        j, p ? p : "(null)");
  			} else {
@@ -28,7 +28,7 @@ index 3e48410..2efb4bd 100644
 -				 */
 +				if (j == defaultbg)
 +					xclearwin();
- 				redraw();
+ 				tfulldirt();
  			}
  			return;
 diff --git a/win.h b/win.h
@@ -44,8 +44,7 @@ diff --git a/x.c b/x.c
 index 4cf6b21..afd35e0 100644
 --- a/x.c
 +++ b/x.c
-@@ -825,6 +825,12 @@ xclear(int x1, int y1, int x2, int y2)
- 			x1, y1, x2-x1, y2-y1);
+@@ -942,5 +942,11 @@ xclear(int x1, int y1, int x2, int y2)
  }
  
 +void

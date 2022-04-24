@@ -506,8 +506,8 @@ index 519b9bd..07a7c66 100644
  };
  
 @@ -113,6 +114,14 @@ char *xstrdup(const char *);
- 
- int xgetcolor(int x, unsigned char *r, unsigned char *g, unsigned char *b);
+ void *xrealloc(void *, size_t);
+ char *xstrdup(const char *);
  
 +int isboxdraw(Rune);
 +ushort boxdrawindex(const Glyph *);
@@ -520,16 +520,17 @@ index 519b9bd..07a7c66 100644
  /* config.h globals */
  extern char *utmp;
  extern char *scroll;
-@@ -126,3 +135,4 @@ extern unsigned int tabspaces;
+@@ -126,4 +135,5 @@ extern unsigned int tabspaces;
  extern unsigned int defaultfg;
  extern unsigned int defaultbg;
  extern unsigned int defaultcs;
 +extern const int boxdraw, boxdraw_bold, boxdraw_braille;
+ extern float alpha;
 diff --git a/x.c b/x.c
 index 2a3bd38..bf6bbf9 100644
 --- a/x.c
 +++ b/x.c
-@@ -1237,6 +1237,8 @@ xinit(int cols, int rows)
+@@ -1274,6 +1274,8 @@ xinit(int cols, int rows)
  	xsel.xtarget = XInternAtom(xw.dpy, "UTF8_STRING", 0);
  	if (xsel.xtarget == None)
  		xsel.xtarget = XA_STRING;
@@ -537,7 +538,7 @@ index 2a3bd38..bf6bbf9 100644
 +	boxdraw_xinit(xw.dpy, xw.cmap, xw.draw, xw.vis);
  }
  
- int
+ void
 @@ -1283,8 +1285,13 @@ xmakeglyphfontspecs(XftGlyphFontSpec *specs, const Glyph *glyphs, int len, int x
  			yp = winy + font->ascent;
  		}

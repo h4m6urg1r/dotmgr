@@ -1,7 +1,6 @@
 --- a/x.c	Tue Mar 20 00:28:57 2018
 +++ b/x.c	Tue Mar 20 00:29:02 2018
-@@ -80,6 +80,7 @@
- 	int w, h; /* window width and height */
+@@ -98,5 +98,6 @@
  	int ch; /* char height */
  	int cw; /* char width  */
 +	int cyo; /* char y offset */
@@ -25,7 +24,7 @@
  		/* Fetch rune and mode for current glyph. */
  		rune = glyphs[i].u;
  		mode = glyphs[i].mode;
-@@ -1155,7 +1157,7 @@
+@@ -1578,6 +1578,6 @@
  				font = &dc.bfont;
  				frcflags = FRC_BOLD;
  			}
@@ -33,7 +32,6 @@
 +			yp = winy + font->ascent + win.cyo;
  		}
  
- 		/* Lookup character index with default font. */
 @@ -1371,12 +1373,12 @@
  
  	/* Render underline and strikethrough. */

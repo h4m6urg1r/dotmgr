@@ -53,15 +53,15 @@ index 120e495..224f26e 100644
  #include <sys/select.h>
  #include <time.h>
  #include <unistd.h>
-@@ -1114,7 +1115,7 @@ xinit(int cols, int rows)
+@@ -1198,7 +1199,7 @@ xinit(int cols, int rows)
  		die("could not init fontconfig.\n");
- 
- 	usedfont = (opt_font == NULL)? font : opt_font;
+
+ 	usedfont = (opt_font == NULL)? fonts[currentfont] : opt_font;
 -	xloadfonts(usedfont, 0);
 +	xloadfonts(usedfont, defaultfontsize);
- 
+
  	/* colors */
- 	xw.cmap = XDefaultColormap(xw.dpy, xw.scr);
+ 	xw.cmap = XCreateColormap(xw.dpy, parent, xw.vis, None);
 @@ -2038,6 +2039,11 @@ main(int argc, char *argv[])
  	case 'v':
  		die("%s " VERSION "\n", argv0);

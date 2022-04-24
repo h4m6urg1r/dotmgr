@@ -16,7 +16,7 @@ diff --git a/config.def.h b/config.def.h
 index fdbacfd..fe07204 100644
 --- a/config.def.h
 +++ b/config.def.h
-@@ -69,6 +69,14 @@ static unsigned int cursorthickness = 2;
+@@ -107,6 +107,14 @@ static unsigned int cursorthickness = 2;
   */
  static int bellvolume = 0;
  
