@@ -1,0 +1,22 @@
+#!/bin/env bash
+
+terminalOpen() {
+    for i in $(wmctrl -l | cut -d' ' -f1)
+    do
+        terminals=(xfce4-terminal Xfce4-terminal st-256color kitty Kitty xterm XTerm)
+        temp+=${terminals[1]}
+        terminal=(${terminals[@]:1})
+        for j in $terminal
+        do
+            temp+=\\\|$j
+        done
+        xprop -id $i WM_CLASS | grep "$temp" > /dev/null && echo $i && return 0
+    done
+    return 1
+}
+
+main() {
+    temp=$(terminalOpen) && wmctrl -i -a $temp || xfce4-terminal
+}
+
+main
