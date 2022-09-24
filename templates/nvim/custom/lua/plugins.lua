@@ -46,9 +46,16 @@ return require('packer').startup(function()
 
     --[[ this is useless now
     --]]
-    use{
-        'ray-x/lsp_signature.nvim',  -- Shows variables to be supplied in a function
-        after='nvim-lspconfig',
+    -- use{
+    --     'ray-x/lsp_signature.nvim',  -- Shows variables to be supplied in a function
+    --     after = 'nvim-lspconfig',
+    -- }
+
+    use {
+        'kkharji/lspsaga.nvim',
+        config = function()
+            require('config/lspsaga-nvim')
+        end
     }
 
     use 'williamboman/nvim-lsp-installer'
@@ -77,16 +84,14 @@ return require('packer').startup(function()
     --     'hrsh7th/vim-vsnip'
     -- }
     use {
-        {
             '/L3MON4D3/LuaSnip',
-            after = 'friendly-snippets',
+            tag = 'v<CurrentMajor>.*',
             config = function()
-                require("luasnip.loaders.from_vscode").lazy_load()
-                require('luasnip').filetype_extend('global','python', 'c', 'cpp')
+                require('luasnip.loaders.from_vscode').lazy_load()
             end
-        },
-        'rafamadriz/friendly-snippets',
     }
+    use 'rafamadriz/friendly-snippets'
+
 
     -- Code outline helpers (variables and functions)
     use {
@@ -115,14 +120,20 @@ return require('packer').startup(function()
 
     use {
         'akinsho/bufferline.nvim',
+        tag = "v2.*",
+        requires = 'kyazdani42/nvim-web-devicons',
         config = function()
             require('config/bufferline-nvim')
         end
     }
-
     use {
-        'onsails/lspkind-nvim'  -- Adds nerd font icons ( in lualine )
+        "tiagovla/scope.nvim",
+        config = function ()
+            require('scope').setup()
+        end
     }
+
+    use 'onsails/lspkind-nvim'  -- Adds nerd font icons ( in lualine )
 
     -- Utils
     use {
@@ -139,7 +150,7 @@ return require('packer').startup(function()
         end
     }
 
-    -- Latex helper plugins
+    --[[ Latex helper plugins
     use {
         'lervag/vimtex',
         ft='tex',
@@ -147,13 +158,15 @@ return require('packer').startup(function()
             require('config/vimtex')
         end
     }
+    --]]
 
-    -- Handy booklet of keybinds
+    --[[ Handy booklet of keybinds
     use {
-        "lazytanuki/nvim-mapper",
+        'lazytanuki/nvim-mapper',
         config = function() require("nvim-mapper").setup{} end,
         before = "telescope.nvim"
     }
+    --]]
 
     -- Collaborative editing
     use 'jbyuki/instant.nvim'
@@ -175,7 +188,7 @@ return require('packer').startup(function()
         ft='markdown',
         disable=false,
         run='cd app && yarn install'
-    } }
+    }}
 
     use {
         'numToStr/Comment.nvim',
@@ -184,10 +197,20 @@ return require('packer').startup(function()
         end
     }
 
+    -- use {
+    --     'christoomey/vim-tmux-navigator',
+    --     config=function()
+    --         require('config/vim-tmux-navigator')
+    --     end
+    -- }
+
+    -- use "fladson/vim-kitty"
+
+    -- Keybinds manager
     use {
-        'christoomey/vim-tmux-navigator',
-        config=function()
-            require('config/vim-tmux-navigator')
+        "folke/which-key.nvim",
+        config = function()
+            require('config/which-key-nvim')
         end
     }
 end)
