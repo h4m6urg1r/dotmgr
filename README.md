@@ -1,3 +1,5 @@
+Archived because of nixos
+----
 # DOTFS
 A dotfiles manager (work in progress)
 
